@@ -1,7 +1,7 @@
 {
-  "token": "MY_TOKEN",
-  "email": "MY_EMAIL",
-  "ip": "PRIVATE_SERVER_IP",
+  "token": "e2249a6a-4f87-4136-9c7d-f0bbad9d8468",
+  "email": "c.barrera@nouvellesimages.xyz",
+  "ip": "37.187.89.206",
   "port": "21025",
   "branch": "default",
   "ptr": false
