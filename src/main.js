@@ -1,7 +1,10 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var spawnManager = require('SpawnSys.SpawnManager')
+var roleUpkeeper = require('role.upkeeper');
+var roleRoadUpkeeper = require('role.roadUpkeeper');
+var spawnManager = require('manager.SpawnManager')
+var energyManager = require('manager.EnergyManager')
 
 module.exports.loop = function () {
     // You should spawn creeps at this point
@@ -13,9 +16,9 @@ module.exports.loop = function () {
         }
     }
 
-
-    spawnManager.Spawn();
-
+    spawnManager.Spawn(5,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper)
+    //var roomName = 'W1N7';
+    //console.log('Energy in room on screen:' + energyManager.StoredEnergieInRoom());
 
     var tower = Game.getObjectById('04075e36fc68664aad1871a3');
     if(tower) {
@@ -43,8 +46,11 @@ module.exports.loop = function () {
         if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
-        if(creep.memory.role == 'roadworker') {
-            roleBuilder.run(creep);
+        if(creep.memory.role == 'upkeeper') {
+            roleUpkeeper.run(creep);
+        }
+        if(creep.memory.role == 'roadUpkeeper') {
+            roleRoadUpkeeper.run(creep);
         }
     }
 }
