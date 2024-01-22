@@ -16,9 +16,7 @@ module.exports.loop = function () {
         }
     }
 
-    spawnManager.Spawn(5,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper)
-    //var roomName = 'W1N7';
-    //console.log('Energy in room on screen:' + energyManager.StoredEnergieInRoom());
+    spawnManager.Spawn(6,4,3,3,3); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper)
 
     var tower = Game.getObjectById('04075e36fc68664aad1871a3');
     if(tower) {

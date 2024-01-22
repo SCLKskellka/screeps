@@ -14,13 +14,7 @@ var roleUpkeeper = {
                     structure.hits < structure.hitsMax);
             }
         })
-        /*for(var i = 0;i<targets.length-2;i++){
-            if((targets[i].hits * 100 / targets[i].hitsMax ) > (targets[i+1].hits * 100 / targets[i+1].hitsMax) ){
-                var tmp = targets[i];
-                targets[i] = targets[i+1];
-                targets[i+1] = tmp;
-            }
-        }*/
+
         console.log('construct to repair -> '+targets.length);
         //console.log('room name: '+creep.room.name);
         if(creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0) {
