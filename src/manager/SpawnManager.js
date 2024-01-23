@@ -11,7 +11,7 @@ var SpawnManager ={
         switch (roleName){
             case 'harvester':
                 var newName = 'Harvester' + Game.time;
-                Game.spawns['Spawn1'].spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName, {memory: {role: 'harvester'}});
+                Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'harvester'}});
                 console.log('Spawning new harvester: ' + newName + 'spawned.');
                 break;
             case 'upgrader':
@@ -34,11 +34,16 @@ var SpawnManager ={
                 console.log('Spawning new roadUpkeeper: ' + newName + 'spawned.');
                 Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'roadUpkeeper'}});
                 break;
+            case 'gardian':
+                var newName = 'Gardian' + Game.time;
+                console.log('Spawning new gardian: ' + newName + 'spawned.');
+                Game.spawns['Spawn1'].spawnCreep([ATTACK,CARRY,WORK,MOVE,MOVE,MOVE], newName, {memory: {role: 'gardian'}});
+                break;
             default:
 
         }
     },
-    Spawn : function (harvesterQtt,upgraderQtt,builderQtt,upkeeperQtt,roadUpkeeperQtt){
+    Spawn : function (alarm,harvesterQtt,upgraderQtt,builderQtt,upkeeperQtt,roadUpkeeperQtt,gardianQtt){
 
         var harvesters = this.WorkType('harvester');
         //console.log('Harvesters: ' + harvesters.length);
@@ -50,22 +55,32 @@ var SpawnManager ={
         //console.log('Builders: ' + builders.length);
         var roadUpkeepers = this.WorkType('roadUpkeeper');
         //console.log('Builders: ' + builders.length);
+        var gardians = this.WorkType('gardian');
+        //console.log('Builders: ' + builders.length);
 
-        if(harvesters.length < harvesterQtt) {
-            this.CrafterUnit('harvester')
+        if(alarm){
+            if(gardians.length < gardianQtt) {
+                this.CrafterUnit('gardian')
+            }
         }
-        if(upgraders.length < upgraderQtt){
-            this.CrafterUnit('upgrader')
+        else{
+            if(harvesters.length < harvesterQtt) {
+                this.CrafterUnit('harvester')
+            }
+            else if(upgraders.length < upgraderQtt){
+                this.CrafterUnit('upgrader')
+            }
+            else if(builders.length < builderQtt) {
+                this.CrafterUnit('builder')
+            }
+            else if(upkeepers.length < upkeeperQtt) {
+                this.CrafterUnit('upkeeper')
+            }
+            else if(roadUpkeepers.length < roadUpkeeperQtt) {
+                this.CrafterUnit('roadUpkeeper')
+            }
         }
-        if(builders.length < builderQtt) {
-            this.CrafterUnit('builder')
-        }
-        if(upkeepers.length < upkeeperQtt) {
-            this.CrafterUnit('upkeeper')
-        }
-        if(roadUpkeepers.length < roadUpkeeperQtt) {
-            this.CrafterUnit('roadUpkeeper')
-        }
+
 
         if(Game.spawns['Spawn1'].spawning) {
             var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];

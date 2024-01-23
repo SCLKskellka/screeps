@@ -1,10 +1,7 @@
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleUpkeeper = require('role.upkeeper');
-var roleRoadUpkeeper = require('role.roadUpkeeper');
+
 var spawnManager = require('manager.SpawnManager')
 var energyManager = require('manager.EnergyManager')
+var jobManager = require('manager.JobManager')
 
 module.exports.loop = function () {
     // You should spawn creeps at this point
@@ -15,8 +12,16 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
+    //foes detection in room W1N7
+    var alarm = false;
+   /*var allEnemys = spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
+    if(allEnemys[0] != null){
+        alarm = true;
+        console.alert('We are attacked !')
+    }
+    else alarm = false;*/
 
-    spawnManager.Spawn(6,4,3,3,3); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper)
+    spawnManager.Spawn(alarm,6,4,3,2,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper)
 
     var tower = Game.getObjectById('04075e36fc68664aad1871a3');
     if(tower) {
@@ -32,23 +37,5 @@ module.exports.loop = function () {
             tower.attack(closestHostile);
         }
     }
-
-    for(var name in Game.creeps) {
-        var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if(creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if(creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if(creep.memory.role == 'upkeeper') {
-            roleUpkeeper.run(creep);
-        }
-        if(creep.memory.role == 'roadUpkeeper') {
-            roleRoadUpkeeper.run(creep);
-        }
-    }
+    jobManager.JobAttribution();
 }
