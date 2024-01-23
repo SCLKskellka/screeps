@@ -6,11 +6,10 @@ var roleUpkeeper = {
         //search road and repair if hit < 5k and freecapacity = false
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION ||
+                return ((structure.structureType == STRUCTURE_EXTENSION ||
                     structure.structureType == STRUCTURE_SPAWN ||
                     structure.structureType == STRUCTURE_WALL ||
-                    structure.structureType == STRUCTURE_CONTAINER ||
-                    structure.structureType == STRUCTURE_RAMPART &&
+                    structure.structureType == STRUCTURE_RAMPART )&&
                     structure.hits < structure.hitsMax);
             }
         })

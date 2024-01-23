@@ -54,7 +54,7 @@ var SpawnManager ={
         if(harvesters.length < harvesterQtt) {
             this.CrafterUnit('harvester')
         }
-        else if(upgraders.length < upgraderQtt){
+        if(upgraders.length < upgraderQtt){
             this.CrafterUnit('upgrader')
         }
         if(builders.length < builderQtt) {
@@ -66,6 +66,7 @@ var SpawnManager ={
         if(roadUpkeepers.length < roadUpkeeperQtt) {
             this.CrafterUnit('roadUpkeeper')
         }
+
         if(Game.spawns['Spawn1'].spawning) {
             var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
             Game.spawns['Spawn1'].room.visual.text(
