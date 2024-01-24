@@ -1,19 +1,33 @@
 
 var roleUpkeeper = {
 
-    /** @param {Creep} creep **/
-    run: function(creep) {
-        //search road and repair if hit < 5k and freecapacity = false
+    getStructure : function(){
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_SPAWN ||
-                    structure.structureType == STRUCTURE_WALL ||
-                    structure.structureType == STRUCTURE_RAMPART )&&
+                        structure.structureType == STRUCTURE_SPAWN ||
+                        structure.structureType == STRUCTURE_WALL ||
+                        structure.structureType == STRUCTURE_RAMPART )&&
                     structure.hits < structure.hitsMax);
             }
         })
 
+        return targets;
+    },
+    /** @param {Creep} creep **/
+    run: function(creep) {
+        //search road and repair if hit < 5k and freecapacity = false
+
+        //var targets = setInterval(this.getStructure, 30000);
+        var targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return ((structure.structureType == STRUCTURE_EXTENSION ||
+                        structure.structureType == STRUCTURE_SPAWN ||
+                        structure.structureType == STRUCTURE_WALL ||
+                        structure.structureType == STRUCTURE_RAMPART )&&
+                    structure.hits < structure.hitsMax);
+            }
+        })
         console.log('construct to repair -> '+targets.length);
         //console.log('room name: '+creep.room.name);
         if(creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0) {

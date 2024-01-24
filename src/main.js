@@ -12,22 +12,28 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-    //foes detection in room W1N7
+    //foes detection in Spawn1's room
     var alarm = false;
-   var allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
+    var allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
     if(allEnemys[0] != null){
         alarm = true;
         console.alert('We are attacked !')
     }
     else alarm = false;
 
-    spawnManager.Spawn(alarm,6,4,3,3,2,4); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
+    spawnManager.Spawn(alarm,7,4,3,3,2,4); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
 
-    var tower = Game.getObjectById('04075e36fc68664aad1871a3');
+    var tower = Game.getObjectById('65b0ce6985e04a08b5364f06');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax
-        });
+            filter: (structure) => {
+                return ((structure.structureType == STRUCTURE_EXTENSION ||
+                        structure.structureType == STRUCTURE_SPAWN ||
+                        structure.structureType == STRUCTURE_WALL ||
+                        structure.structureType == STRUCTURE_RAMPART )&&
+                    structure.hits < structure.hitsMax);
+            }
+        })
         if(closestDamagedStructure) {
             tower.repair(closestDamagedStructure);
         }
