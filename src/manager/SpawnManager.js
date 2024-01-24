@@ -3,7 +3,7 @@ var SpawnManager ={
     WorkType : function (roleName) {
 
         var array = _.filter(Game.creeps, (creep) => creep.memory.role == roleName);
-        console.log(array.name + ': ' + array.length);
+        //console.log(roleName + ': ' + array.length);
         return array;
     },
 

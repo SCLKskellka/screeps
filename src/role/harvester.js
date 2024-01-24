@@ -3,8 +3,10 @@ var roleHarvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         var sources = creep.room.find(FIND_SOURCES);
-        if(creep.store.getFreeCapacity() > 0 && creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+        if(creep.store.getFreeCapacity() > 0 ) {
+            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE){
+                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+            }
         }
         else {
             var targets = creep.room.find(FIND_STRUCTURES, {
