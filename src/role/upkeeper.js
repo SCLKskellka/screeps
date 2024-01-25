@@ -4,10 +4,10 @@ var roleUpkeeper = {
     getStructure : function(){
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN ||
-                        structure.structureType == STRUCTURE_WALL ||
-                        structure.structureType == STRUCTURE_RAMPART )&&
+                return ((structure.structureType === STRUCTURE_EXTENSION ||
+                        structure.structureType === STRUCTURE_SPAWN ||
+                        structure.structureType === STRUCTURE_WALL ||
+                        structure.structureType === STRUCTURE_RAMPART )&&
                     structure.hits < structure.hitsMax);
             }
         })

@@ -1,13 +1,8 @@
 creep.prototype.search=function () {
-
+    var sourcesStats = room.memory.sourceStats;
+    for (let i = 0; i< )
     if(creep.store.getFreeCapacity() > 0 ) {
-        var sources = creep.room.find(FIND_SOURCES);
-        var slot = 0;
-        //pour chaque ressource on cherche les positions à 1 case où un harvester peut se placer pour récolter
-        //les deux type de terrains qui fonctionnent : TERRAIN_MASK_PLAIN et TERRAIN_MASK_SWAMP
-        for(var i=0;i<sources.length;i++){
 
-        }
         creep.memory.state = 'moveToHarvest';
     }
     else {
