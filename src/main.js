@@ -13,13 +13,8 @@ module.exports.loop = function () {
         }
     }
     //foes detection in Spawn1's room
-    var alarm = false;
-    var allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
-    if(allEnemys[0] != null){
-        alarm = true;
-        console.alert('We are attacked !')
-    }
-    else alarm = false;
+    const allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
+    let alarm = allEnemys.length > 0;
 
     spawnManager.Spawn(alarm,7,4,3,3,2,4); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
 
@@ -27,10 +22,10 @@ module.exports.loop = function () {
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN ||
-                        structure.structureType == STRUCTURE_WALL ||
-                        structure.structureType == STRUCTURE_RAMPART )&&
+                return ((structure.structureType === STRUCTURE_EXTENSION ||
+                        structure.structureType === STRUCTURE_SPAWN ||
+                        structure.structureType === STRUCTURE_WALL ||
+                        structure.structureType === STRUCTURE_RAMPART )&&
                     structure.hits < structure.hitsMax);
             }
         })

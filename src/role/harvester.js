@@ -23,7 +23,20 @@ var roleHarvester = {
                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }*/
-        
+        switch (creep.memory.state) {
+            case 'search' :
+                creep.prototype.search();
+                return;
+            case 'moveToHarvest' :
+                creep.prototype.moveToHarvest(creep.memory.target);
+                return;
+            case 'moveToDeposit' :
+                creep.prototype.moveToDeposit(creep.memory.target);
+                return;
+            default :
+                creep.prototype.search();
+                return;
+        }
 
 
     }
