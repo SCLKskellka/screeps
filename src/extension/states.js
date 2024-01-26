@@ -1,41 +1,38 @@
-creep.prototype.search=function () {
-    var sourcesStats = room.memory.sourceStats;
-    for (let i = 0; i< )
-    if(creep.store.getFreeCapacity() > 0 ) {
-
-        creep.memory.state = 'moveToHarvest';
+Creep.prototype.searchSource=function () {
+    var sourcesStats = this.room.memory.sourceStats;
+    for (let i = 0; i < sourcesStats[0].length;i++){
+        if(sourcesStats[i][1] > 0){
+            this.memory.target = sourcesStats[i][1];
+            return;
+        }
     }
-    else {
-        var targets = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return (!(structure.structureType !== STRUCTURE_EXTENSION &&
-                        structure.structureType !== STRUCTURE_SPAWN &&
-                        structure.structureType !== STRUCTURE_CONTAINER &&
-                        structure.structureType !== STRUCTURE_TOWER)) &&
-                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-            }
-        });
-        creep.memory.target = targets[0];
-        creep.memory.state = 'moveToDeposit';
-    }
-
-
+    this.memory.target = null;
 }
 
-creep.prototype.moveToHarvest = function (target){
+Creep.prototype.searchStructureWithFreeCapacity=function () {
+    var targets = this.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (!(structure.structureType !== STRUCTURE_EXTENSION &&
+                    structure.structureType !== STRUCTURE_SPAWN &&
+                    structure.structureType !== STRUCTURE_CONTAINER &&
+                    structure.structureType !== STRUCTURE_TOWER)) &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        }
+    });
+    this.memory.target = targets[0];
+}
+
+Creep.prototype.moveToHarvest = function (){
+    const target = this.memory.target;
     if(creep.harvest(target) === ERR_NOT_IN_RANGE){
-        creep.moveTo(target, {visualizePathStyle: {stroke: '#ffaa00'}});
-    }
-    if(creep.store.getFreeCapacity() > 0){
-        creep.memory.state = 'search';
+        this.moveTo(target, {visualizePathStyle: {stroke: '#ffaa00'}});
     }
 }
 
-creep.prototype.moveToDeposit = function (target){
-    if(creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+Creep.prototype.moveToDeposit = function (){
+    const target = creep.memory.target;
+    if(this.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
     }
-    if(creep.store[RESOURCE_ENERGY] === 0){
-        creep.memory.state = 'search';
-    }
+
 }
