@@ -47,7 +47,6 @@ var SpawnManager ={
     /**
      * ghgjkhjkhjkhjkhjkhjkhjkhjk
      * @param {boolean} alarm
-     * @param {number} harvesterQtt
      * @param {number} upgraderQtt
      * @param {number} builderQtt
      * @param {number} upkeeperQtt
@@ -55,7 +54,7 @@ var SpawnManager ={
      * @param {number} gardianQtt
      * @constructor
      */
-    Spawn : function (alarm,harvesterQtt,upgraderQtt,builderQtt,upkeeperQtt,
+    Spawn : function (alarm,upgraderQtt,builderQtt,upkeeperQtt,
                       roadUpkeeperQtt,gardianQtt){
         var harvesters = this.WorkType('harvester');
         //console.log('Harvesters: ' + harvesters.length);
@@ -69,6 +68,9 @@ var SpawnManager ={
         //console.log('Builders: ' + builders.length);
         var gardians = this.WorkType('gardian');
         //console.log('Builders: ' + builders.length);
+
+        var harvesterQtt = Game.spawns['Spawn1'].room.memory.sourceStats[Game.spawns['Spawn1'].room.memory.mySources.length-1][2]
+            * 2 - Game.spawns['Spawn1'].room.memory.mySources.length;
 
         if(alarm){
             if(gardians.length < gardianQtt) {

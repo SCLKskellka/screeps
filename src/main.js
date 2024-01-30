@@ -20,7 +20,7 @@ module.exports.loop = function () {
         const allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
         let alarm = allEnemys.length > 0;
 
-        spawnManager.Spawn(alarm,7,4,3,3,2,4); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
+        spawnManager.Spawn(alarm,4,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
 
         var tower = Game.getObjectById('65b0ce6985e04a08b5364f06');
         if(tower) {
