@@ -1,7 +1,6 @@
-var EnergyManager = {
+export const EnergyManager = {
     StoredEnergieInRoom : function totlaAmount(){
 
     },
 
 };
-module.exports = EnergyManager;

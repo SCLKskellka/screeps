@@ -1,13 +1,12 @@
-
-var spawnManager = require('manager.SpawnManager')
-var energyManager = require('manager.EnergyManager')
-var jobManager = require('manager.JobManager')
-require('extension.states')
-require('manager.SourceManager')
+import "./extensions/creepExtension.mjs";
+import "./manager/SourceManager.mjs";
+import {JobAttribution} from "./manager/JobManager.mjs";
+import {runSpawnManager} from "./manager/SpawnManager.mjs";
 
 module.exports.loop = function () {
-    if(Game.spawns['Spawn1']){
-        Game.spawns['Spawn1'].room.SourceManager();
+    const spawn = Game.spawns['Spawn1'];
+    if(spawn){
+        spawn.room.SourceManager();
         // You should spawn creeps at this point
 
         for(var name in Memory.creeps) {
@@ -19,8 +18,8 @@ module.exports.loop = function () {
         //foes detection in Spawn1's room
         const allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
         let alarm = allEnemys.length > 0;
-
-        spawnManager.Spawn(alarm,4,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
+        Game.spawns['Spawn1'].room.memory.alarm = alarm;
+        runSpawnManager(alarm,4,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
 
         var tower = Game.getObjectById('65b0ce6985e04a08b5364f06');
         if(tower) {
@@ -42,7 +41,7 @@ module.exports.loop = function () {
                 tower.attack(closestHostile);
             }
         }
-        jobManager.JobAttribution();
+        JobAttribution();
     }
 
 }
