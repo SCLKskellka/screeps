@@ -48,14 +48,15 @@ var SpawnManager ={
      * ghgjkhjkhjkhjkhjkhjkhjkhjk
      * @param {boolean} alarm
      * @param {number} harvesterQtt
-     * @param upgraderQtt
-     * @param builderQtt
-     * @param upkeeperQtt
-     * @param roadUpkeeperQtt
-     * @param gardianQtt
+     * @param {number} upgraderQtt
+     * @param {number} builderQtt
+     * @param {number} upkeeperQtt
+     * @param {number} roadUpkeeperQtt
+     * @param {number} gardianQtt
      * @constructor
      */
-    Spawn : function (alarm,harvesterQtt,upgraderQtt,builderQtt,upkeeperQtt,roadUpkeeperQtt,gardianQtt){
+    Spawn : function (alarm,harvesterQtt,upgraderQtt,builderQtt,upkeeperQtt,
+                      roadUpkeeperQtt,gardianQtt){
         var harvesters = this.WorkType('harvester');
         //console.log('Harvesters: ' + harvesters.length);
         var upgraders = this.WorkType('upgrader');

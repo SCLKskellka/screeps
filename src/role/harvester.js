@@ -6,17 +6,15 @@ var roleHarvester = {
         switch (creep.memory.state) {
             case 'searchSource' :
                 creep.searchSource();
-                if(!creep.memory.target){
+                if(creep.memory.target === null){
                     creep.memory.state = 'harvesterAfk';
                     return;
                 }
-                if(creep.store.getFreeCapacity() > 0 ) {
-                    creep.memory.state = 'moveToHarvest';
-                }
+                creep.memory.state = 'moveToHarvest';
                 return;
             case 'moveToHarvest' :
                 creep.moveToHarvest();
-                if(creep.store.getFreeCapacity() > 0){
+                if(!creep.store.getFreeCapacity() > 0){
                     creep.memory.state = 'searchStructureWithFreeCapacity';
                 }
                 return;
@@ -24,6 +22,13 @@ var roleHarvester = {
                 creep.moveToDeposit();
                 if(creep.store[RESOURCE_ENERGY] === 0){
                     creep.memory.state = 'searchSource';
+                }
+                return;
+            case 'harvesterAfk' :
+                creep.searchSource();
+                if(creep.memory.target !== null){
+                    creep.memory.state = 'searchSource';
+                    return;
                 }
                 return;
             case 'searchStructureWithFreeCapacity' :

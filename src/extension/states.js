@@ -1,8 +1,10 @@
 Creep.prototype.searchSource=function () {
     var sourcesStats = this.room.memory.sourceStats;
+    var sources = this.room.memory.mySources;
     for (let i = 0; i < sourcesStats[0].length;i++){
-        if(sourcesStats[i][1] > 0){
-            this.memory.target = sourcesStats[i][1];
+        if(sourcesStats[i][0] > 0){
+            //console.log('slot libre -> '+sourcesStats[i][0]);
+            this.memory.target = sources[i];
             return;
         }
     }
@@ -23,16 +25,25 @@ Creep.prototype.searchStructureWithFreeCapacity=function () {
 }
 
 Creep.prototype.moveToHarvest = function (){
-    const target = this.memory.target;
-    if(creep.harvest(target) === ERR_NOT_IN_RANGE){
+    const target = Game.getObjectById(this.memory.target.id);
+    if(this.harvest(target) === ERR_NOT_IN_RANGE){
         this.moveTo(target, {visualizePathStyle: {stroke: '#ffaa00'}});
     }
 }
 
 Creep.prototype.moveToDeposit = function (){
-    const target = creep.memory.target;
+    const target = Game.getObjectById(this.memory.target.id);
+    console.log(target)
     if(this.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
         this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
     }
 
+}
+/**
+ *
+ * @param {number}flagNum
+ */
+Creep.prototype.harvesterAfk= function (flagNum){
+    var flags = this.room.find(Flag);
+    this.moveTo(flags[flagNum], {visualizePathStyle: {stroke: '#00f4ff'}});
 }
