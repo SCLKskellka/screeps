@@ -1,50 +1,57 @@
-export const WorkType = function (roleName) {
+export const WorkerType = function (roleName) {
     const array = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
     //console.log(roleName + ': ' + array.length);
     return array;
 }
 
-export const CrafterUnit = function (roleName){
-    const spawn = Game.spawns['Spawn1'];
-    let newName;
-    switch (roleName){
+/**
+ *
+ * @param {string} spawnName
+ * @param {string} screepsRole
+ * @param {string} screepsName
+ */
+export const basicCreep = function (spawnName,screepsRole,screepsName){
+    Game.spawns[spawnName].spawnCreep([WORK,CARRY,MOVE,MOVE], screepsName, {memory: {role: screepsRole}});
+    console.log('Spawning new ' + screepsRole + ': ' + screepsName + 'spawned.');
+}
+
+/**
+ *
+ * @param {string} roleName
+ * @param {string} spawnName
+ * @constructor
+ */
+export const CrafterUnit = function (roleName, spawnName){
+    let creepsName = roleName + Game.time;
+    basicCreep(spawnName,roleName,creepsName);
+    /*switch (roleName){
         case 'harvester':
-            newName = 'Harvester' + Game.time;
-            spawn.spawnCreep([WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'harvester'}});
-            console.log('Spawning new harvester: ' + newName + 'spawned.');
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         case 'upgrader':
-            newName = 'Upgrader' + Game.time;
-            console.log('Spawning new upgrader: ' + newName + 'spawned.');
-            spawn.spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName, {memory: {role: 'upgrader'}});
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         case 'builder':
-            newName = 'Builder' + Game.time;
-            console.log('Spawning new builder: ' + newName + 'spawned.');
-            spawn.spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'builder'}});
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         case 'upkeeper':
-            newName = 'Upkeeper' + Game.time;
-            console.log('Spawning new upkeeper: ' + newName + 'spawned.');
-            spawn.spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'upkeeper'}});
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         case 'roadUpkeeper':
-            newName = 'RoadUpkeeper' + Game.time;
-            console.log('Spawning new roadUpkeeper: ' + newName + 'spawned.');
-            spawn.spawnCreep([WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'roadUpkeeper'}});
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         case 'gardian':
-            newName = 'Gardian' + Game.time;
-            console.log('Spawning new gardian: ' + newName + 'spawned.');
-            spawn.spawnCreep([ATTACK,CARRY,WORK,MOVE,MOVE,MOVE], newName, {memory: {role: 'gardian'}});
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
             break;
         default:
-
-    }
+            Game.spawns[spawnName].basicCreep(spawnName,roleName,creepsName);
+            break;
+    }*/
 }
 
 /**
  * ghgjkhjkhjkhjkhjkhjkhjkhjk
+ * @param {string} spawnName
  * @param {boolean} alarm
  * @param {number} upgraderQtt
  * @param {number} builderQtt
@@ -53,44 +60,43 @@ export const CrafterUnit = function (roleName){
  * @param {number} gardianQtt
  * @constructor
  */
-export const runSpawnManager = function (alarm,upgraderQtt,builderQtt,upkeeperQtt,
+export const runSpawnManager = function (spawnName,alarm,upgraderQtt,builderQtt,upkeeperQtt,
                                          roadUpkeeperQtt,gardianQtt){
-    const harvesters = WorkType('harvester');
+    const harvesters = WorkerType('harvester');
     //console.log('Harvesters: ' + harvesters.length);
-    const upgraders = WorkType('upgrader');
+    const upgraders = WorkerType('upgrader');
     //console.log('Upgraders: ' + upgraders.length);
-    const builders = WorkType('builder');
+    const builders = WorkerType('builder');
     //console.log('Builders: ' + builders.length);
-    const upkeepers = WorkType('upkeeper');
+    const upkeepers = WorkerType('upkeeper');
     //console.log('Builders: ' + builders.length);
-    const roadUpkeepers = WorkType('roadUpkeeper');
+    const roadUpkeepers = WorkerType('roadUpkeeper');
     //console.log('Builders: ' + builders.length);
-    const gardians = WorkType('gardian');
+    const gardians = WorkerType('gardian');
     //console.log('Builders: ' + builders.length);
 
-    const harvesterQtt = Game.spawns['Spawn1'].room.memory.sourceStats[Game.spawns['Spawn1'].room.memory.mySources.length-1][2]
-        * 2 - Game.spawns['Spawn1'].room.memory.mySources.length;
+    const harvesterQtt = Game.spawns[spawnName].room.memory.slotsQuantity + Game.spawns[spawnName].room.memory.mySources.length;
 
     if(alarm){
         if(gardians.length < gardianQtt) {
-            CrafterUnit('gardian')
+            CrafterUnit('gardian',spawnName)
         }
     }
     else{
         if(harvesters.length < harvesterQtt) {
-            CrafterUnit('harvester')
+            CrafterUnit('harvester',spawnName)
         }
         else if(upgraders.length < upgraderQtt){
-            CrafterUnit('upgrader')
+            CrafterUnit('upgrader',spawnName)
         }
         else if(builders.length < builderQtt) {
-            CrafterUnit('builder')
+            CrafterUnit('builder',spawnName)
         }
         else if(upkeepers.length < upkeeperQtt) {
-            CrafterUnit('upkeeper')
+            CrafterUnit('upkeeper',spawnName)
         }
         else if(roadUpkeepers.length < roadUpkeeperQtt) {
-            CrafterUnit('roadUpkeeper')
+            CrafterUnit('roadUpkeeper',spawnName)
         }
     }
 

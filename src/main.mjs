@@ -19,7 +19,7 @@ module.exports.loop = function () {
         const allEnemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
         let alarm = allEnemys.length > 0;
         Game.spawns['Spawn1'].room.memory.alarm = alarm;
-        runSpawnManager(alarm,4,4,3,3,2); //Spawn(X) : X * (harvester | upgrader | builder | upkeeper | roadupkeeper | gardian)
+        runSpawnManager('Spawn1',alarm,4,4,3,3,2);
 
         var tower = Game.getObjectById('65b0ce6985e04a08b5364f06');
         if(tower) {
