@@ -75,7 +75,7 @@ export const runSpawnManager = function (spawnName,alarm,upgraderQtt,builderQtt,
     const gardians = WorkerType('gardian');
     //console.log('Builders: ' + builders.length);
 
-    const harvesterQtt = Game.spawns[spawnName].room.memory.slotsQuantity + Game.spawns[spawnName].room.memory.mySources.length;
+    const harvesterQtt = Game.spawns[spawnName].room.memory.totalSlotsQuantity + Game.spawns[spawnName].room.memory.mySources.length;
 
     if(alarm){
         if(gardians.length < gardianQtt) {

@@ -6,6 +6,7 @@ Room.prototype.SourceManager = function (){
     let freeSlot = 0;
     let totalSlot = 0;
     const sourceStats = [];
+    let workerTargetingMe = 0;
     //for each source search free place for harvester to harvest
     //type of terrain witch match : plain : 0 and swamp : TERRAIN_MASK_SWAMP
     for(let i=0;i<sources.length;i++) {
@@ -45,28 +46,31 @@ Room.prototype.SourceManager = function (){
         sourceStats[i][0] = freeSlot;
         sourceStats[i][1] = usedSlot;
         sourceStats[i][2] = slot;
+        sourceStats[i][3] = workerTargetingMe;
         console.log('freeslot:' + freeSlot + ' usedSlot:' + usedSlot);
         freeSlot = 0;
         usedSlot = 0;
         slot = 0
     }
     console.log('FIN ');
-    this.memory.totalSlotsQuantity = slot;
-    this.memory.mySources = sources;
-    this.memory.sourceStats = sourceStats;
+
     const myCreeps = this.find(FIND_MY_CREEPS)
-    let creepsTargetingSource = 0;
     const targetingSourceList = [];
     //for each harvester if this source target limit > this source current target number , harvester target this source
     for(let i = 0; i < myCreeps.length;i++){
         if(myCreeps[i].memory.role === 'harvester'){
             for(let j =0; j < sources.length; j++){
                 if(targetingSourceList[j] === undefined )targetingSourceList[i]=0;
-                var targetlimit = sourceStats[j[2] * 2 + 1]
+                var targetlimit = sourceStats[j][2] * 2 + 1
                 if(targetingSourceList[j]<targetlimit){
-                    myCreeps[i].memory.mySource = sources[j].id;
+                    myCreeps[i].memory.mySourceId = sources[j].id;
+
                 }
             }
         }
     }
+
+    this.memory.totalSlotsQuantity = totalSlot;
+    this.memory.mySources = sources;
+    this.memory.sourceStats = sourceStats;
 };
