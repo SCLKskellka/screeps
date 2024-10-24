@@ -3,6 +3,8 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleUpkeeper = require('role.upkeeper');
 var roleRoadUpkeeper = require('role.roadUpkeeper');
+var roleExtractors = require('role.Extractors');
+var roleCollector = require('role.Collector');
 
 var JobManager = {
     JobAttribution : function (){
@@ -22,6 +24,12 @@ var JobManager = {
             }
             if(creep.memory.role == 'roadUpkeeper') {
                 roleRoadUpkeeper.run(creep);
+            }
+            if(creep.memory.role == 'Extractor') {
+                roleExtractors.run(creep);
+            }
+            if(creep.memory.role == 'Collector') {
+                roleCollector.run(creep);
             }
         }
     },
